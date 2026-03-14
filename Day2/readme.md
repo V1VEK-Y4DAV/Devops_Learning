@@ -1,11 +1,12 @@
-# (a) Create a repository {chat-app}
+# Day - 2
+## (a) Create a repository {chat-app}
 
-# (b) Create few branches
+## (b) Create few branches
 - dev → code  write MVP ( Minimum viable product )
 - test → test the existing code for edge cases
 - prod → production team ensures the code that it is production ready  
 
-# (c) Containerise the working app
+## (c) Containerise the working app
 [ code → Image ]
 
 image  
@@ -33,8 +34,6 @@ version change hoga
 ek same command lage
 
 ---
-
-# (2)
 
 image (file) → extract files  
 - .bin  
@@ -74,7 +73,7 @@ container image ek registry me store hoti hai
 
 ---
 
-# (e) Container orchestration tool
+## (e) Container orchestration tool
 
 [Kubernetes]
 
@@ -92,13 +91,26 @@ pod ke andar container image ko pull karega
 
 ---
 
-# (3)
-
 ## Containerization {app}
 
 ### (a) app
 
 Dockerfile → app ke root directory me
+
+
+---
+
+# (b) docker build -t point:v1
+
+image → blueprint / template
+
+application code + dependencies + runtime
+
+docker container = running instance of image
+
+---
+
+## containerization → application ko image bana kar container me run karna
 
 
 ---
