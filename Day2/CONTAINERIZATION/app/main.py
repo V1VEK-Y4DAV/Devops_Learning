@@ -10,3 +10,6 @@ s = pd.Series(arr)
 print(s)
 plt.scatter(arr,arr)
 plt.show()
+
+def add(a, b):
+    return a + b
