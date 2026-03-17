@@ -2,4 +2,4 @@ pandas
 numpy
 matplotlib
 seaborn
-sk-learn
+scikit-learn
