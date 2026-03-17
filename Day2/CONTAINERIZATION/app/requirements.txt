@@ -1,5 +1,5 @@
 pandas
 numpy
-matplotli
+matplotlib
 seaborn
 sk-learn
