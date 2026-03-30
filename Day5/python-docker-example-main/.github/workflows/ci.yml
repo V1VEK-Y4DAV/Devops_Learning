@@ -9,18 +9,71 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1. Checkout code
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # 2. Set up Python
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
+      # 3. Install dependencies
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
 
+      # 4. Run basic check
       - name: Run basic check
         run: |
           python -c "import fastapi"
+
+      # -------------------------------
+      # 🐳 Docker Containerization Steps
+      # -------------------------------
+
+      # 5. Set up Docker Buildx
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # 6. Build Docker image
+      - name: Build Docker image
+        run: |
+          docker build -t fastapi-app .
+
+      # 7. Run container and test API
+      - name: Run container test
+        run: |
+          docker run -d -p 8000:8000 fastapi-app
+          sleep 5
+          curl http://localhost:8000
+
+
+
+# name: CI Pipeline
+
+# on:
+#   push:
+#   pull_request:
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
+
+#       - name: Set up Python
+#         uses: actions/setup-python@v5
+#         with:
+#           python-version: "3.11"
+
+#       - name: Install dependencies
+#         run: |
+#           pip install -r requirements.txt
+
+#       - name: Run basic check
+#         run: |
+#           python -c "import fastapi"
