@@ -2,52 +2,56 @@ name: CI Pipeline
 
 on:
   push:
+    branches: [ main ]
   pull_request:
+    branches: [ main ]
 
 jobs:
+  # -----------------------
+  # 🧪 Build Job
+  # -----------------------
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  
 
     steps:
-      # 1. Checkout
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4 
 
-      # 2. Setup Python
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      # 3. Install deps
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: |
+          pip install -r requirements.txt
 
-      # 4. Basic check
       - name: Run basic check
-        run: python -c "import fastapi"
+        run: |
+          python -c "import fastapi"
 
-      # -----------------------
-      # 🐳 Docker Steps
-      # -----------------------
+  # -----------------------
+  # 🐳 Containerize Job
+  # -----------------------
+  containerize:
+    runs-on: ubuntu-latest
+    needs: build   # 👈 runs only if build succeeds
 
-      # 5. Build image
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4 
+
       - name: Build Docker image
-        run: docker build -t fastapi-app .
+        run: |
+          docker build -t fastapi-app .
 
-      # 6. Run container
       - name: Run container
-        run: docker run -d -p 8000:8000 fastapi-app
+        run: |
+          docker run -d -p 8000:8000 fastapi-app
 
-      # 7. Wait for server
       - name: Wait for app
         run: sleep 10
 
-      # 8. Debug (VERY IMPORTANT)
-      - name: Check running containers
-        run: docker ps
-
-      # 9. Test API
       - name: Test API
         run: curl --fail http://localhost:8000
 
